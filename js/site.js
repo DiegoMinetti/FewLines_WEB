@@ -16,6 +16,7 @@ var buttons = document.querySelectorAll('.button');
 
 for (var i = 0; i < buttons.length; i++) {
     (function(button, http) {
+        console.log("href: " + button.href);
         http.open('HEAD', button.href);
         http.onreadystatechange = function() {
             if (this.readyState != this.DONE || this.status != 200) {
