@@ -19,6 +19,8 @@ for (var i = 0; i < buttons.length; i++) {
         console.log("href: " + button.href);
         http.open('HEAD', button.href);
         http.onreadystatechange = function() {
+            console.log("readyState: " + this.readyState);
+            console.log("status: " + this.status);
             if (this.readyState != this.DONE || this.status != 200) {
                 button.style.display = 'none';
             }
