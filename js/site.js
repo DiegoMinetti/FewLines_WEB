@@ -16,12 +16,13 @@ var buttons = document.querySelectorAll('.button');
 
 for (var i = 0; i < buttons.length; i++) {
     (function(button, http) {
-        console.log("href: " + button.href);
+        // console.log("href: " + button.href);
         http.open('HEAD', button.href);
         http.onreadystatechange = function() {
-            console.log("readyState: " + this.readyState);
-            console.log("status: " + this.status);
-            if (this.readyState != this.DONE || this.status != 200) {
+            // console.log("readyState: " + this.readyState);
+            // console.log("status: " + this.status);
+            if (this.status != 200) {
+            // if (this.readyState != this.DONE || this.status != 200) {
                 button.style.display = 'none';
             }
         };
