@@ -11,3 +11,17 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+var buttons = document.querySelectorAll('.button');
+
+for (var i = 0; i < buttons.length; i++) {
+    (function(button, http) {
+        http.open('HEAD', button.href);
+        http.onreadystatechange = function() {
+            if (this.readyState != this.DONE || this.status != 200) {
+                button.style.display = 'none';
+            }
+        };
+        http.send();
+    }(buttons[i], new XMLHttpRequest()))
+}
