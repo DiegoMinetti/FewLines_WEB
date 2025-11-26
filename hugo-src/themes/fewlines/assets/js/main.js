@@ -16,7 +16,7 @@
     }
 })();
 
-// Check if buttons/links are available
+// Check if buttons/links are available (with error handling)
 (function() {
     var buttons = document.querySelectorAll('.wsup-button, .btn-tool');
     
@@ -24,15 +24,39 @@
         (function(button, http) {
             if (!button.href) return;
             
+            // Set timeout for request
+            http.timeout = 5000; // 5 seconds
+            
             http.open('HEAD', button.href);
+            
             http.onreadystatechange = function() {
-                if (this.status != 200 && this.readyState === this.DONE) {
-                    button.style.display = 'none';
-                } else if (this.status == 200) {
-                    button.style.display = 'inline-flex';
+                if (this.readyState === this.DONE) {
+                    if (this.status === 200) {
+                        button.style.display = 'inline-flex';
+                    } else if (this.status !== 0) {
+                        // Hide button only if we got a definitive error response
+                        button.style.display = 'none';
+                    }
+                    // If status is 0 (CORS/network error), leave button visible
                 }
             };
-            http.send();
+            
+            http.onerror = function() {
+                // On network error, leave button visible (better UX)
+                button.style.display = 'inline-flex';
+            };
+            
+            http.ontimeout = function() {
+                // On timeout, leave button visible (better UX)
+                button.style.display = 'inline-flex';
+            };
+            
+            try {
+                http.send();
+            } catch (e) {
+                // On exception, leave button visible
+                button.style.display = 'inline-flex';
+            }
         }(buttons[i], new XMLHttpRequest()));
     }
 })();

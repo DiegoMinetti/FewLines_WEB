@@ -514,17 +514,10 @@ a {
     }
 }
 
-/* ===== User Selection Control ===== */
-body {
+/* ===== User Selection Control (only for buttons and icons) ===== */
+.btn, .btn-tool, .material-icons, .service-icon, .feature-number {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-
-p, h1, h2, h3, h4, h5, h6, a, span {
-    -moz-user-select: text;
-    -webkit-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
 }
