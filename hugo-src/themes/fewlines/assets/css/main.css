@@ -108,7 +108,10 @@ a {
     max-width: 600px;
     width: 100%;
     margin-left: auto;
-    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
+    /* Removed blur filter for crisp, professional logo rendering */
+    filter: none;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .hero-tagline {
