@@ -2,12 +2,18 @@
 (function() {
     var vcard = getParameterByName('vcard');
     if (vcard) {
-        window.location.href = "/vcard/" + vcard + ".vcf";
+        // Sanitize vcard parameter to prevent path traversal
+        // Only allow alphanumeric characters, hyphens, and underscores
+        var sanitizedVcard = vcard.replace(/[^a-zA-Z0-9_-]/g, '');
+        if (sanitizedVcard && sanitizedVcard === vcard) {
+            window.location.href = "/vcard/" + sanitizedVcard + ".vcf";
+        }
     }
 
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, '\\$&');
+        // Properly escape regex special characters including backslash
+        name = name.replace(/[[\]\\]/g, '\\$&');
         var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
             results = regex.exec(url);
         if (!results) return null;
