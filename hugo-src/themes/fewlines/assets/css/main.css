@@ -110,9 +110,7 @@ a {
     max-width: 600px;
     width: 100%;
     margin-left: auto;
-    filter: drop-shadow(0 10px 30px rgba(255, 255, 255, 0.25)) 
-            drop-shadow(0 5px 15px rgba(0, 0, 0, 0.25)) 
-            drop-shadow(0 0 40px rgba(255, 255, 255, 0.15));
+    filter: drop-shadow(0 10px 30px rgba(255, 255, 255, 0.25)) drop-shadow(0 5px 15px rgba(0, 0, 0, 0.25)) drop-shadow(0 0 40px rgba(255, 255, 255, 0.15));
 }
 
 .hero-tagline {
