@@ -24,7 +24,7 @@ for (var i = 0; i < buttons.length; i++) {
             if (this.status != 200) {
             // if (this.readyState != this.DONE || this.status != 200) {
                 button.style.display = 'none';
-            }else{
+            } else {
                 button.style.display = 'inline';
             }
         };
