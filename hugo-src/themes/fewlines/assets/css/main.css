@@ -104,6 +104,9 @@ a {
     animation: fadeInUp 0.8s ease-out 0.2s backwards;
     /* Enhanced container styling for professional appearance */
     padding: 20px 40px;
+    /* Fallback for browsers without backdrop-filter support */
+    background: rgba(63, 81, 181, 0.15);
+    /* Glass-morphism effect */
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     backdrop-filter: blur(10px);
@@ -118,9 +121,8 @@ a {
     max-width: 600px;
     width: 100%;
     margin-left: auto;
-    /* Enhanced drop shadow for professional depth and clarity */
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4)) 
-            drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+    /* Optimized single drop shadow for professional depth and clarity */
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
     /* Smooth high-quality rendering */
     image-rendering: auto;
     -webkit-font-smoothing: antialiased;
