@@ -1,0 +1,134 @@
+{{ define "main" }}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-gradient"></div>
+    <div class="hero-content">
+        <div class="container">
+            <div class="hero-text">
+                <p class="hero-label">Somos</p>
+                <div class="logo">
+                    <img alt="FewLines" src="{{ .Site.BaseURL }}images/Logo_AzulGrisOscuro.png" />
+                </div>
+                <h1 class="hero-tagline">
+                    Desarrollamos <span class="highlight">soluciones simples</span> para problemas complejos
+                </h1>
+                <p class="hero-description">
+                    En FewLines transformamos desafíos tecnológicos en oportunidades de negocio. 
+                    Ofrecemos servicios personalizados y soluciones adaptables que se ajustan perfectamente a las necesidades de tu empresa.
+                </p>
+                <div class="hero-cta">
+                    <a href="https://wa.me/{{ .Site.Params.whatsapp }}?text=Contacto%20desde%20FewLines.com.ar" class="btn btn-primary">
+                        <i class="material-icons">chat</i>
+                        Escribinos por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services">
+    <div class="container">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="material-icons">code</i>
+                </div>
+                <h3>Desarrollo a Medida</h3>
+                <p>Creamos soluciones de software personalizadas que se adaptan perfectamente a tus procesos de negocio.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="material-icons">cloud</i>
+                </div>
+                <h3>Soluciones en la Nube</h3>
+                <p>Implementamos arquitecturas cloud modernas, escalables y seguras para tu negocio.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="material-icons">support_agent</i>
+                </div>
+                <h3>Soporte Continuo</h3>
+                <p>Acompañamiento técnico permanente para garantizar el funcionamiento óptimo de tus sistemas.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="material-icons">integration_instructions</i>
+                </div>
+                <h3>Integración de Sistemas</h3>
+                <p>Conectamos tus aplicaciones existentes para optimizar procesos y mejorar la productividad.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="why-us">
+    <div class="container">
+        <h2 class="section-title">¿Por qué elegirnos?</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-number">01</div>
+                <h3>Soluciones Adaptables</h3>
+                <p>Cada proyecto es único. Nos adaptamos a tus necesidades específicas y construimos soluciones que crecen con tu negocio.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-number">02</div>
+                <h3>Equipo Experimentado</h3>
+                <p>Contamos con profesionales altamente capacitados y con años de experiencia en diversas industrias.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-number">03</div>
+                <h3>Tecnología de Punta</h3>
+                <p>Utilizamos las últimas tecnologías y mejores prácticas para garantizar soluciones robustas y escalables.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-number">04</div>
+                <h3>Atención Personalizada</h3>
+                <p>Trabajamos codo a codo contigo, entendiendo tu negocio y acompañándote en cada etapa del proyecto.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>¿Listo para transformar tu negocio?</h2>
+            <p>Estamos ansiosos por conocerte y ayudarte a alcanzar tus objetivos</p>
+            <a href="https://wa.me/{{ .Site.Params.whatsapp }}?text=Contacto%20desde%20FewLines.com.ar" class="btn btn-secondary">
+                Iniciemos una conversación
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer with tools -->
+<footer class="footer">
+    <div class="footer-tools">
+        <div class="qr-fiscal">
+            <a href="{{ .Site.Params.afipQR }}" target="_F960AFIPInfo">
+                <img src="{{ .Site.BaseURL }}images/DATAWEB.jpg" alt="AFIP QR">
+            </a>
+        </div>
+        <div class="asistentes">
+            <a class="btn-tool btn-express" href="{{ .Site.Params.teamviewerExpress }}">
+                <i class="material-icons">file_download</i>
+                Express
+            </a>
+            <a class="btn-tool btn-host" href="{{ .Site.Params.teamviewerHost }}">
+                <i class="material-icons">file_download</i>
+                24/7
+            </a>
+        </div>
+    </div>
+    <div class="wsup">
+        <a class="wsup-button" href="{{ .Site.Params.wsup }}">
+            Mensaje de WhatsApp sin Agendar
+        </a>
+    </div>
+</footer>
+{{ end }}

@@ -1,0 +1,18 @@
+baseURL = 'https://www.fewlines.com.ar/'
+languageCode = 'es-ar'
+title = 'FewLines - Soluciones Simples para Problemas Complejos'
+theme = 'fewlines'
+
+[params]
+  description = "Desarrollamos soluciones simples para problemas complejos"
+  whatsapp = "5491165177711"
+  teamviewerExpress = "https://get.teamviewer.com/fewlinesexpress"
+  teamviewerHost = "https://get.teamviewer.com/fewlineshost"
+  wsup = "https://wsup.fewlines.com.ar"
+  afipQR = "http://qr.afip.gob.ar/?qr=K3CzBHenCLAIyGV5z3O7EA,,"
+  googleAnalytics = "G-SV98YPCGVW"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
