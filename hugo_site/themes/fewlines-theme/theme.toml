@@ -1,0 +1,7 @@
+name = "FewLines Theme"
+license = "MIT"
+description = "Custom theme for FewLines website"
+homepage = "https://www.fewlines.com.ar/"
+tags = ["business", "responsive", "modern"]
+features = ["responsive", "modern-design"]
+min_version = "0.121.0"
