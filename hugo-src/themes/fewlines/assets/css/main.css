@@ -110,7 +110,7 @@ a {
     margin-left: auto;
     /* Removed blur filter for crisp, professional logo rendering */
     filter: none;
-    image-rendering: -webkit-optimize-contrast;
+    /* Crisp rendering for better quality at all sizes */
     image-rendering: crisp-edges;
 }
 
