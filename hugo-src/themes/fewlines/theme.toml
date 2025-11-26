@@ -1,0 +1,19 @@
+name = 'FewLines'
+license = 'MIT'
+licenselink = 'https://github.com/DiegoMinetti/FewLines_WEB/blob/main/LICENSE'
+description = 'Modern corporate theme for FewLines with responsive design and company branding'
+
+# The home page of the theme, where the source can be found
+homepage = 'https://github.com/DiegoMinetti/FewLines_WEB'
+
+# Demo site
+demosite = 'https://www.fewlines.com.ar'
+
+# Taxonomy terms
+tags = ['corporate', 'business', 'company', 'modern']
+features = ['responsive', 'modern-design', 'animations', 'google-analytics']
+
+# Theme author
+[author]
+  name = 'FewLines Team'
+  homepage = 'https://www.fewlines.com.ar'
