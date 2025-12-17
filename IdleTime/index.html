@@ -461,217 +461,195 @@
                 </div>
             </div>
         </div>
+    </div>
         
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script>
-        (function() {
-            const phoneNumber = '5491165177711';
-            const whatsappUrl = `https://wa.me/${phoneNumber}`;
-            const messages = [
-                '💼 Transformamos tu negocio con tecnología a medida',
-                '🚀 Despega tu empresa hacia el futuro digital',
-                '✨ Hacemos realidad tus ideas tecnológicas',
-                '🎯 Tu socio ideal en desarrollo web y gestión'
-            ];
-            let seasonalTimer = null;
-            let seasonalMode = '';
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+    // Global IdleTime initializer - works even when inserted dynamically via DOMParser
+    (function() {
+        const phoneNumber = '5491165177711';
+        const whatsappUrl = `https://wa.me/${phoneNumber}`;
+        const messages = [
+            '💼 Transformamos tu negocio con tecnología a medida',
+            '🚀 Despega tu empresa hacia el futuro digital',
+            '✨ Hacemos realidad tus ideas tecnológicas',
+            '🎯 Tu socio ideal en desarrollo web y gestión'
+        ];
 
-            function formatPhone(num) {
-                return `+${num.slice(0, 2)} ${num.slice(2, 3)} ${num.slice(3, 5)} ${num.slice(5, 9)}-${num.slice(9, 13)}`;
-            }
+        function formatPhone(num) {
+            return `+${num.slice(0, 2)} ${num.slice(2, 3)} ${num.slice(3, 5)} ${num.slice(5, 9)}-${num.slice(9, 13)}`;
+        }
 
-            function updateQR() {
-                const root = document.querySelector('[data-idletime-root]');
-                if (!root) return;
-                const qrImg = root.querySelector('[data-qr-image]');
-                const qrLink = root.querySelector('[data-qr-link]');
-                if (!qrImg || !qrLink) return;
-                const qrData = encodeURIComponent(whatsappUrl);
-                const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${qrData}`;
-                qrImg.src = qrSrc;
-                qrImg.setAttribute('srcset', `${qrSrc} 1x, https://api.qrserver.com/v1/create-qr-code/?size=360x360&data=${qrData} 2x`);
-                qrLink.href = whatsappUrl;
-            }
+        function updateQR(root) {
+            const qrImg = root.querySelector('[data-qr-image]');
+            const qrLink = root.querySelector('[data-qr-link]');
+            if (!qrImg || !qrLink) return;
+            const qrData = encodeURIComponent(whatsappUrl);
+            const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${qrData}`;
+            qrImg.src = qrSrc;
+            qrImg.setAttribute('srcset', `${qrSrc} 1x, https://api.qrserver.com/v1/create-qr-code/?size=360x360&data=${qrData} 2x`);
+            qrLink.href = whatsappUrl;
+        }
 
-            function startMessages() {
-                const root = document.querySelector('[data-idletime-root]');
-                if (!root) return;
-                const nodes = Array.from(root.querySelectorAll('.message-text'));
-                if (nodes.length === 0) return;
-                let slot = 0;
-                let msgIndex = 0;
+        function startMessages(root) {
+            const nodes = Array.from(root.querySelectorAll('.message-text'));
+            if (nodes.length === 0) return;
+            let slot = 0;
+            let msgIndex = 0;
 
-                // initialize first message
-                nodes[slot].textContent = messages[msgIndex];
+            nodes[slot].textContent = messages[msgIndex];
+            msgIndex = (msgIndex + 1) % messages.length;
+
+            const cycle = () => {
+                const current = nodes[slot];
+                const nextSlot = (slot + 1) % nodes.length;
+                const next = nodes[nextSlot];
+
+                next.textContent = messages[msgIndex];
                 msgIndex = (msgIndex + 1) % messages.length;
 
-                const cycle = () => {
-                    const current = nodes[slot];
-                    const nextSlot = (slot + 1) % nodes.length;
-                    const next = nodes[nextSlot];
+                current.classList.remove('is-active');
+                current.classList.add('is-leaving');
+                next.classList.remove('is-leaving');
 
-                    next.textContent = messages[msgIndex];
-                    msgIndex = (msgIndex + 1) % messages.length;
+                requestAnimationFrame(() => {
+                    next.classList.add('is-active');
+                });
 
-                    current.classList.remove('is-active');
-                    current.classList.add('is-leaving');
-                    next.classList.remove('is-leaving');
+                setTimeout(() => {
+                    current.classList.remove('is-leaving');
+                }, 420);
 
-                    // allow browser to register state before activating next
-                    requestAnimationFrame(() => {
-                        next.classList.add('is-active');
-                    });
+                slot = nextSlot;
+            };
 
-                    // cleanup leaving state after transition
-                    setTimeout(() => {
-                        current.classList.remove('is-leaving');
-                    }, 420);
+            setInterval(cycle, 2800);
+        }
 
-                    slot = nextSlot;
-                };
+        function createSpark(root, mode, initialDelay = 0) {
+            const effects = root.querySelector('.seasonal-effects');
+            if (!effects) return;
 
-                setInterval(cycle, 2800);
+            const randPos = () => {
+                const roll = Math.random();
+                if (roll < 0.35) return 4 + Math.random() * 18;
+                if (roll < 0.7) return 78 + Math.random() * 18;
+                return 20 + Math.random() * 60;
+            };
+            const randY = () => -4 + Math.random() * 108;
+
+            const s = document.createElement('span');
+            s.style.left = `${randPos()}%`;
+            s.style.top = `${randY()}%`;
+
+            if (mode === 'is-christmas') {
+                s.className = 'spark spark-star';
+                s.style.setProperty('--scale', (0.65 + Math.random() * 0.75).toFixed(2));
+                const dur = 2.2 + Math.random() * 1.6;
+                s.style.setProperty('--dur', `${dur.toFixed(2)}s`);
+                s.style.setProperty('--delay', `${initialDelay.toFixed(2)}s`);
+
+                s.addEventListener('animationend', () => {
+                    s.remove();
+                    createSpark(root, mode, 0);
+                }, { once: true });
+            } else if (mode === 'is-fireworks') {
+                s.className = 'spark spark-firework';
+                s.style.setProperty('--sz', `${(7 + Math.random() * 7).toFixed(1)}px`);
+                s.style.setProperty('--hue', `${30 + Math.random() * 50}`);
+                s.style.setProperty('--rot', `${Math.floor(Math.random() * 360)}deg`);
+                const dur = 1.4 + Math.random() * 1;
+                s.style.setProperty('--dur', `${dur.toFixed(2)}s`);
+                s.style.setProperty('--delay', `${initialDelay.toFixed(2)}s`);
+
+                s.addEventListener('animationend', () => {
+                    s.remove();
+                    createSpark(root, mode, 0);
+                }, { once: true });
             }
 
-            function createSpark(mode, initialDelay = 0) {
-                const root = document.querySelector('[data-idletime-root]');
-                if (!root) return;
-                const effects = root.querySelector('.seasonal-effects');
-                if (!effects) return;
+            effects.appendChild(s);
+        }
 
-                const randPos = () => {
-                    const roll = Math.random();
-                    if (roll < 0.35) return 4 + Math.random() * 18;
-                    if (roll < 0.7) return 78 + Math.random() * 18;
-                    return 20 + Math.random() * 60;
-                };
-                const randY = () => -4 + Math.random() * 108;
+        function initSeasonalSparks(root, mode) {
+            const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+            const count = mode === 'is-christmas' ? randInt(5, 9) : randInt(5, 8);
 
-                const s = document.createElement('span');
-                s.style.left = `${randPos()}%`;
-                s.style.top = `${randY()}%`;
+            for (let i = 0; i < count; i++) {
+                const stagger = (i / count) * 2.4;
+                createSpark(root, mode, stagger);
+            }
+        }
 
-                if (mode === 'is-christmas') {
-                    s.className = 'spark spark-star';
-                    s.style.setProperty('--scale', (0.65 + Math.random() * 0.75).toFixed(2));
-                    const dur = 2.2 + Math.random() * 1.6;
-                    s.style.setProperty('--dur', `${dur.toFixed(2)}s`);
-                    s.style.setProperty('--delay', `${initialDelay.toFixed(2)}s`);
+        function applySeasonalEffects(root) {
+            const today = new Date();
+            const month = today.getMonth();
+            const day = today.getDate();
+            const banner = root.querySelector('[data-seasonal-banner]');
+            const bannerText = root.querySelector('[data-seasonal-text]');
+            if (!banner || !bannerText) return;
 
-                    s.addEventListener('animationend', () => {
-                        s.remove();
-                        createSpark(mode, 0);
-                    }, { once: true });
-                } else if (mode === 'is-fireworks') {
-                    s.className = 'spark spark-firework';
-                    s.style.setProperty('--sz', `${(7 + Math.random() * 7).toFixed(1)}px`);
-                    s.style.setProperty('--hue', `${30 + Math.random() * 50}`);
-                    s.style.setProperty('--rot', `${Math.floor(Math.random() * 360)}deg`);
-                    const dur = 1.4 + Math.random() * 1;
-                    s.style.setProperty('--dur', `${dur.toFixed(2)}s`);
-                    s.style.setProperty('--delay', `${initialDelay.toFixed(2)}s`);
-
-                    s.addEventListener('animationend', () => {
-                        s.remove();
-                        createSpark(mode, 0);
-                    }, { once: true });
-                }
-
-                effects.appendChild(s);
+            let mode = '';
+            if (month === 11 && day >= 8 && day <= 25) {
+                mode = 'is-christmas';
+                bannerText.textContent = '🎄 ¡Feliz Navidad!';
+            } else if ((month === 11 && day >= 26) || (month === 0 && day <= 1)) {
+                mode = 'is-fireworks';
+                bannerText.textContent = '🎆 ¡Felices fiestas!';
             }
 
-            function initSeasonalSparks(mode) {
-                const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-                const count = mode === 'is-christmas' ? randInt(5, 9) : randInt(5, 8);
+            if (!mode) return;
 
-                for (let i = 0; i < count; i++) {
-                    const stagger = (i / count) * 2.4;
-                    createSpark(mode, stagger);
-                }
+            initSeasonalSparks(root, mode);
+            root.classList.add(mode);
+            banner.classList.add('is-visible');
+        }
+
+        function initializeIdleTime(root) {
+            if (root.dataset.idletimeInitialized) return;
+            root.dataset.idletimeInitialized = 'true';
+
+            const phoneDisplay = root.querySelector('[data-phone-display]');
+            if (phoneDisplay) {
+                phoneDisplay.textContent = formatPhone(phoneNumber);
             }
-
-            function applySeasonalEffects() {
-                const today = new Date();
-                const month = today.getMonth(); // 0-based
-                const day = today.getDate();
-                const root = document.querySelector('[data-idletime-root]');
-                if (!root) return;
-                const banner = root.querySelector('[data-seasonal-banner]');
-                const bannerText = root.querySelector('[data-seasonal-text]');
-                if (!banner || !bannerText) return;
-
-                let mode = '';
-                if (month === 11 && day >= 8 && day <= 25) {
-                    mode = 'is-christmas';
-                    bannerText.textContent = '🎄 ¡Feliz Navidad!';
-                } else if ((month === 11 && day >= 26) || (month === 0 && day <= 1)) {
-                    mode = 'is-fireworks';
-                    bannerText.textContent = '🎆 ¡Felices fiestas!';
-                }
-
-                if (!mode) return;
-
-                seasonalMode = mode;
-                initSeasonalSparks(mode);
-
-                root.classList.add(mode);
-                banner.classList.add('is-visible');
-            }
-
-            function init() {
-                const root = document.querySelector('[data-idletime-root]');
-                if (!root) {
-                    console.warn('IdleTime: root not found, retrying...');
-                    return;
-                }
-                
-                const phoneDisplay = root.querySelector('[data-phone-display]');
-                const qrImg = root.querySelector('[data-qr-image]');
-                const messageTexts = root.querySelectorAll('.message-text');
-                
-                // Verify essential elements exist
-                if (!phoneDisplay || !qrImg || messageTexts.length === 0) {
-                    console.warn('IdleTime: essential elements not found, retrying...');
-                    return;
-                }
-                
-                console.log('IdleTime: initializing...');
-                
-                if (phoneDisplay) {
-                    phoneDisplay.textContent = formatPhone(phoneNumber);
-                }
-                updateQR();
-                startMessages();
-                applySeasonalEffects();
-                
-                console.log('IdleTime: initialized successfully');
-            }
-
-            // Robust initialization with retry mechanism
-            let initAttempts = 0;
-            const maxAttempts = 20;
+            updateQR(root);
+            startMessages(root);
+            applySeasonalEffects(root);
             
-            function tryInit() {
-                const root = document.querySelector('[data-idletime-root]');
-                if (root && root.querySelector('[data-phone-display]') && root.querySelector('[data-qr-image]')) {
-                    init();
-                } else if (initAttempts < maxAttempts) {
-                    initAttempts++;
-                    setTimeout(tryInit, 100);
-                } else {
-                    console.error('IdleTime: failed to initialize after maximum attempts');
-                }
-            }
-            
-            // Start initialization
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', tryInit);
-            } else {
-                tryInit();
-            }
-        })();
-        </script>
-    </div>
+            console.log('IdleTime: initialized successfully');
+        }
+
+        // Check existing elements
+        const existingRoot = document.querySelector('[data-idletime-root]');
+        if (existingRoot) {
+            initializeIdleTime(existingRoot);
+        }
+
+        // Watch for dynamically inserted elements
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) {
+                        if (node.hasAttribute && node.hasAttribute('data-idletime-root')) {
+                            initializeIdleTime(node);
+                        } else if (node.querySelector) {
+                            const root = node.querySelector('[data-idletime-root]');
+                            if (root) {
+                                initializeIdleTime(root);
+                            }
+                        }
+                    }
+                });
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    })();
+    </script>
     </body>
 </html>
