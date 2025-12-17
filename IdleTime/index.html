@@ -3,20 +3,35 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <!-- Material Icons -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="preload" as="image" href="../images/logo_azulgrisoscuro.png">
-        <style>
-            body {
+    </head>
+    <body>
+        <div data-idletime-root>
+            <!-- Compiled and minified CSS -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+            <!-- Material Icons -->
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            
+            <style>
+            [data-idletime-root] {
+                all: initial;
+                display: block;
+            }
+            
+            [data-idletime-root] *,
+            [data-idletime-root] *::before,
+            [data-idletime-root] *::after {
+                box-sizing: border-box;
+            }
+
+            [data-idletime-root] body,
+            [data-idletime-root] > .container {
                 background: #f5f6f8;
                 overflow: hidden;
                 margin: 0;
                 padding: 6px 0;
             }
             
-            .screensaver-container {
+            [data-idletime-root] .screensaver-container {
                 animation: fadeIn 0.8s ease-in;
                 display: flex;
                 justify-content: center;
@@ -30,7 +45,7 @@
                 to { opacity:  1; transform: scale(1); }
             }
             
-            .card {
+            [data-idletime-root] .card {
                 border-radius: 16px !important;
                 box-shadow: 0 16px 48px rgba(0,0,0,0.18) !important;
                 margin: 0 !important;
@@ -39,17 +54,18 @@
                 width: 100%;
                 overflow: hidden;
                 position: relative;
+                background: white;
             }
 
-            .row {
+            [data-idletime-root] .row {
                 margin: 0;
             }
             
-            .card-image {
+            [data-idletime-root] .card-image {
                 padding-top: 12px;
             }
             
-            .card-image img {
+            [data-idletime-root] .card-image img {
                 border-radius: 14px;
                 max-height: 110px !important;
                 object-fit: contain !important;
@@ -59,17 +75,17 @@
                 image-rendering: -webkit-optimize-contrast;
             }
             
-            .card-content {
+            [data-idletime-root] .card-content {
                 padding: 10px !important;
             }
             
-            .value-prop {
+            [data-idletime-root] .value-prop {
                 font-size: 1.05rem !important;
                 line-height: 1.35 !important;
                 margin: 0.35rem 0 !important;
             }
 
-            .seasonal-banner {
+            [data-idletime-root] .seasonal-banner {
                 display: none;
                 align-items: center;
                 justify-content: center;
@@ -87,22 +103,22 @@
                 height: 40px;
                 border-radius: 0px;
             }
-            .seasonal-banner [data-seasonal-text] {
+            [data-idletime-root] .seasonal-banner [data-seasonal-text] {
                 position: relative;
                 z-index: 2;
             }
-            .seasonal-banner.is-visible {
+            [data-idletime-root] .seasonal-banner.is-visible {
                 display: flex;
             }
 
-            .seasonal-banner .seasonal-effects {
+            [data-idletime-root] [data-idletime-root] .seasonal-banner .seasonal-effects {
                 position: absolute;
                 inset: 0;
                 pointer-events: none;
                 z-index: 1;
             }
 
-            .seasonal-banner .spark {
+            [data-idletime-root] .seasonal-banner .spark {
                 position: absolute;
                 width: 10px;
                 height: 10px;
@@ -111,7 +127,7 @@
                 transform: translate(-50%, -50%);
             }
 
-            .spark-star {
+            [data-idletime-root] .spark-star {
                 background: #fff6d5;
                 clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
                 box-shadow: 0 0 8px rgba(255, 246, 213, 0.8);
@@ -120,7 +136,7 @@
                 transform: translate(-50%, -50%) scale(var(--scale, 1));
             }
 
-            .spark-firework {
+            [data-idletime-root] .spark-firework {
                 width: var(--sz, 9px);
                 height: var(--sz, 9px);
                 border-radius: 50%;
@@ -139,20 +155,20 @@
                 transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(0.65);
             }
 
-            .is-christmas .seasonal-banner {
+            [data-idletime-root].is-christmas .seasonal-banner {
                 background: linear-gradient(120deg, #1e7f55, #3f5595);
                 box-shadow: 0 6px 18px rgba(31, 127, 85, 0.25);
             }
 
-            .is-fireworks .seasonal-banner {
+            [data-idletime-root].is-fireworks .seasonal-banner {
                 background: linear-gradient(120deg, #3f5595, #ff6f00);
                 box-shadow: 0 6px 18px rgba(255, 111, 0, 0.25);
             }
 
-            .is-christmas .spark-star { animation-play-state: running; }
-            .is-fireworks .spark-firework { animation-play-state: running; }
+            [data-idletime-root].is-christmas .spark-star { animation-play-state: running; }
+            [data-idletime-root].is-fireworks .spark-firework { animation-play-state: running; }
             
-            .rotating-message {
+            [data-idletime-root] .rotating-message {
                 height: 52px;
                 margin: 0.6rem 0;
                 position: relative;
@@ -161,7 +177,7 @@
                 justify-content: center;
             }
             
-            .rotating-message .message-text {
+            [data-idletime-root] .rotating-message .message-text {
                 font-size: 1rem;
                 font-weight: 500;
                 color: #4a4a4a;
@@ -180,18 +196,18 @@
                 padding: 0 8px;
             }
             
-            .rotating-message .message-text.is-active {
+            [data-idletime-root] .rotating-message .message-text.is-active {
                 opacity: 1;
                 transform: translate(-50%, 0);
                 left: 50%;
             }
 
-            .rotating-message .message-text.is-leaving {
+            [data-idletime-root] .rotating-message .message-text.is-leaving {
                 opacity: 0;
                 transform: translate(-50%, -22px);
             }
             
-            .qr-section {
+            [data-idletime-root] .qr-section {
                 border-radius: 12px;
                 padding: 0.4rem 0.35rem;
                 margin: 0.5rem 0;
@@ -203,7 +219,7 @@
                 gap: 10px;
             }
 
-            .qr-text {
+            [data-idletime-root] .qr-text {
                 color: #333;
                 font-weight: 600;
                 font-size: 0.98rem;
@@ -216,17 +232,22 @@
                 min-width: 0;
             }
 
-            .qr-title {
+            [data-idletime-root] .qr-title {
                 justify-content: flex-start;
             }
 
-            .qr-scan {
-                justify-content: flex-end;
+            [data-idletime-root] .qr-scan {
+                display: inline-flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
                 color: #3f5595;
                 font-weight: 700;
+                text-align: center;
             }
             
-            .qr-wrapper {
+            [data-idletime-root] .qr-wrapper {
                 position: relative;
                 display: inline-block;
                 padding: 0;
@@ -237,7 +258,7 @@
                 flex-shrink: 0;
             }
 
-            .qr-wrapper::after {
+            [data-idletime-root] .qr-wrapper::after {
                 content: '';
                 position: absolute;
                 inset: -4px;
@@ -254,7 +275,7 @@
                 100% { box-shadow: 0 0 0 0 rgba(63,85,149,0); opacity: 0; }
             }
             
-            .qr-image {
+            [data-idletime-root] .qr-image {
                 position: relative;
                 border-radius: 10px;
                 display: block;
@@ -264,7 +285,7 @@
                 z-index: 1;
             }
 
-            .seasonal-overlay {
+            [data-idletime-root] [data-idletime-root] .seasonal-overlay {
                 position: absolute;
                 inset: 0;
                 pointer-events: none;
@@ -272,12 +293,12 @@
                 overflow: hidden;
             }
 
-            .is-christmas .seasonal-overlay,
-            .is-fireworks .seasonal-overlay {
+            [data-idletime-root].is-christmas .seasonal-overlay,
+            [data-idletime-root].is-fireworks .seasonal-overlay {
                 display: block;
             }
 
-            .spark {
+            [data-idletime-root] .spark {
                 position: absolute;
                 width: 8px;
                 height: 8px;
@@ -305,7 +326,7 @@
                 100% { transform: translate(-50%, calc(-50% + 8px)) rotate(var(--rot, 0deg)) scale(1.4); opacity: 0; }
             }
             
-            .scan-indicator {
+            [data-idletime-root] .scan-indicator {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -315,7 +336,7 @@
                 font-weight: 600;
             }
             
-            .benefits-grid {
+            [data-idletime-root] .benefits-grid {
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
@@ -324,32 +345,32 @@
                 padding: 0.35rem;
             }
             
-            .benefit-item {
+            [data-idletime-root] .benefit-item {
                 text-align: center;
                 flex: 1;
             }
             
-            .benefit-item i {
+            [data-idletime-root] .benefit-item i {
                 font-size:  2rem;
                 color: #FF6F00;
                 margin-bottom: 0.3rem;
                 display: block;
             }
             
-            .benefit-item p {
+            [data-idletime-root] .benefit-item p {
                 margin: 0;
                 font-size: 0.83rem;
                 font-weight: 600;
                 color: #666;
             }
             
-            .footer-info {
+            [data-idletime-root] .footer-info {
                 margin-top: 0.8rem ! important;
                 padding-top:  0.8rem !important;
                 border-top: 1px solid #eee;
             }
             
-            .footer-info p {
+            [data-idletime-root] .footer-info p {
                 color: #666;
                 font-size: 0.9rem;
                 margin: 0;
@@ -360,108 +381,107 @@
             }
             
             @media (max-height: 600px) {
-                body {
+                [data-idletime-root] body {
                     padding: 4px 0;
                 }
                 
-                .card-image img {
+                [data-idletime-root] .card-image img {
                     max-height: 74px !important;
                     padding: 10px 24px !important;
                 }
                 
-                .card-content {
+                [data-idletime-root] .card-content {
                     padding: 8px !important;
                 }
                 
-                .value-prop {
+                [data-idletime-root] .value-prop {
                     font-size: 0.94rem !important;
                     margin: 0.26rem 0 !important;
                 }
                 
-                .rotating-message {
+                [data-idletime-root] .rotating-message {
                     height: 42px;
                     margin: 0.5rem 0;
                 }
                 
-                .rotating-message .message-text {
+                [data-idletime-root] .rotating-message .message-text {
                     font-size: 0.88rem;
                 }
                 
-                .qr-section {
+                [data-idletime-root] .qr-section {
                     padding: 0.5rem 0.3rem;
                     margin: 0.4rem 0;
                     gap: 8px;
                 }
                 
-                .qr-section h5 {
+                [data-idletime-root] .qr-section h5 {
                     font-size: 1rem !important;
                     margin: 0 0 0.4rem 0 !important;
                 }
                 
-                .qr-wrapper::after {
+                [data-idletime-root] .qr-wrapper::after {
                     inset: -3px;
                 }
 
-                .qr-image {
+                [data-idletime-root] .qr-image {
                     width: 130px !important;
                     height: 130px !important;
                 }
                 
-                .scan-indicator {
+                [data-idletime-root] .scan-indicator {
                     margin-top: 0.4rem;
                     font-size: 0.88rem;
                 }
                 
-                .benefits-grid {
+                [data-idletime-root] .benefits-grid {
                     gap: 0.45rem;
                     margin:  0.4rem 0;
                     padding: 0.28rem;
                 }
                 
-                .benefit-item i {
+                [data-idletime-root] .benefit-item i {
                     font-size:  1.4rem;
                     margin-bottom: 0.18rem;
                 }
                 
-                .benefit-item p {
+                [data-idletime-root] .benefit-item p {
                     font-size: 0.74rem;
                 }
                 
-                .footer-info {
+                [data-idletime-root] .footer-info {
                     margin-top: 0.5rem !important;
                     padding-top: 0.5rem ! important;
                 }
                 
-                .footer-info p {
+                [data-idletime-root] .footer-info p {
                     font-size: 0.78rem;
                 }
             }
             
             @media (max-width: 600px) {
-                .benefits-grid {
+                [data-idletime-root] .benefits-grid {
                     flex-direction: column;
                     gap: 0.8rem;
                 }
 
-                .qr-section {
+                [data-idletime-root] .qr-section {
                     flex-direction: column;
                     align-items: center;
                     text-align: center;
                     gap: 10px;
                 }
 
-                .qr-text,
-                .qr-title,
-                .qr-scan {
+                [data-idletime-root] .qr-text,
+                [data-idletime-root] .qr-title,
+                [data-idletime-root] .qr-scan {
                     justify-content: center;
                     text-align: center;
                     width: 100%;
                 }
             }
         </style>
-    </head>
-    <body>
-        <div class="container screensaver-container">
+
+    <div class="screensaver-container">
             <div class="row">
                 <div class="col s12 m10 offset-m1 l8 offset-l2">
                     
@@ -508,7 +528,7 @@
                               <img class="qr-image" data-qr-image src="" alt="QR hacia WhatsApp" loading="lazy" decoding="async">
                           </a>
                           <p class="qr-text qr-scan">
-                              <i class="material-icons" style="margin-right: 4px;">photo_camera</i>
+                              <i class="material-icons" aria-hidden="true">photo_camera</i>
                               Apunta tu cámara aquí
                           </p>
                       </div>
@@ -530,6 +550,7 @@
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script>
+        (function() {
             const phoneNumber = '5491165177711';
             const whatsappUrl = `https://wa.me/${phoneNumber}`;
             const messages = [
@@ -546,8 +567,9 @@
             }
 
             function updateQR() {
-                const qrImg = document.querySelector('[data-qr-image]');
-                const qrLink = document.querySelector('[data-qr-link]');
+                const root = document.querySelector('[data-idletime-root]');
+                const qrImg = root.querySelector('[data-qr-image]');
+                const qrLink = root.querySelector('[data-qr-link]');
                 const qrData = encodeURIComponent(whatsappUrl);
                 const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${qrData}`;
                 qrImg.src = qrSrc;
@@ -556,7 +578,8 @@
             }
 
             function startMessages() {
-                const nodes = Array.from(document.querySelectorAll('.message-text'));
+                const root = document.querySelector('[data-idletime-root]');
+                const nodes = Array.from(root.querySelectorAll('.message-text'));
                 let slot = 0;
                 let msgIndex = 0;
 
@@ -593,7 +616,8 @@
             }
 
             function createSpark(mode, initialDelay = 0) {
-                const effects = document.querySelector('.seasonal-effects');
+                const root = document.querySelector('[data-idletime-root]');
+                const effects = root.querySelector('.seasonal-effects');
                 if (!effects) return;
 
                 const randPos = () => {
@@ -651,9 +675,9 @@
                 const today = new Date();
                 const month = today.getMonth(); // 0-based
                 const day = today.getDate();
-                const root = document.documentElement;
-                const banner = document.querySelector('[data-seasonal-banner]');
-                const bannerText = document.querySelector('[data-seasonal-text]');
+                const root = document.querySelector('[data-idletime-root]');
+                const banner = root.querySelector('[data-seasonal-banner]');
+                const bannerText = root.querySelector('[data-seasonal-text]');
 
                 let mode = '';
                 if (month === 11 && day >= 8 && day <= 25) {
@@ -673,13 +697,23 @@
                 banner.classList.add('is-visible');
             }
 
-            document.addEventListener('DOMContentLoaded', () => {
-                const phoneDisplay = document.querySelector('[data-phone-display]');
+            function init() {
+                const root = document.querySelector('[data-idletime-root]');
+                const phoneDisplay = root.querySelector('[data-phone-display]');
                 phoneDisplay.textContent = formatPhone(phoneNumber);
                 updateQR();
                 startMessages();
                 applySeasonalEffects();
-            });
+            }
+
+            // Execute init when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
         </script>
+    </div>
     </body>
 </html>
