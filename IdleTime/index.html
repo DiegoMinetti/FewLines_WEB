@@ -394,106 +394,6 @@
                 gap: 6px;
                 letter-spacing: 0.3px;
             }
-            
-            @media (max-height: 600px) {
-                [data-idletime-root] body {
-                    padding: 4px 0;
-                }
-                
-                [data-idletime-root] .card-image img {
-                    max-height: 74px !important;
-                    padding: 10px 24px !important;
-                }
-                
-                [data-idletime-root] .card-content {
-                    padding: 8px !important;
-                }
-                
-                [data-idletime-root] .value-prop {
-                    font-size: 0.94rem !important;
-                    margin: 0.26rem 0 !important;
-                }
-                
-                [data-idletime-root] .rotating-message {
-                    height: 42px;
-                    margin: 0.5rem 0;
-                }
-                
-                [data-idletime-root] .rotating-message .message-text {
-                    font-size: 0.88rem;
-                }
-                
-                [data-idletime-root] .qr-section {
-                    padding: 0.5rem 0.3rem;
-                    margin: 0.4rem 0;
-                    gap: 8px;
-                }
-                
-                [data-idletime-root] .qr-section h5 {
-                    font-size: 1rem !important;
-                    margin: 0 0 0.4rem 0 !important;
-                }
-                
-                [data-idletime-root] .qr-wrapper::after {
-                    inset: -3px;
-                }
-
-                [data-idletime-root] .qr-image {
-                    width: 130px !important;
-                    height: 130px !important;
-                }
-                
-                [data-idletime-root] .scan-indicator {
-                    margin-top: 0.4rem;
-                    font-size: 0.88rem;
-                }
-                
-                [data-idletime-root] .benefits-grid {
-                    gap: 0.45rem;
-                    margin:  0.4rem 0;
-                    padding: 0.28rem;
-                }
-                
-                [data-idletime-root] .benefit-item i {
-                    font-size:  1.4rem;
-                    margin-bottom: 0.18rem;
-                }
-                
-                [data-idletime-root] .benefit-item p {
-                    font-size: 0.74rem;
-                }
-                
-                [data-idletime-root] .footer-info {
-                    margin-top: 0.5rem !important;
-                    padding-top: 0.5rem ! important;
-                }
-                
-                [data-idletime-root] .footer-info p {
-                    font-size: 0.78rem;
-                }
-            }
-            
-            @media (max-width: 600px) {
-                [data-idletime-root] .benefits-grid {
-                    flex-direction: column;
-                    gap: 0.8rem;
-                }
-
-                [data-idletime-root] .qr-section {
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                    gap: 10px;
-                }
-
-                [data-idletime-root] .qr-text,
-                [data-idletime-root] .qr-title,
-                [data-idletime-root] .qr-scan {
-                    justify-content: center;
-                    text-align: center;
-                    width: 100%;
-                }
-            }
         </style>
 
     <div class="screensaver-container">
@@ -722,25 +622,53 @@
             function init() {
                 const root = document.querySelector('[data-idletime-root]');
                 if (!root) {
-                    // If not found, retry after a short delay
-                    setTimeout(init, 100);
+                    console.warn('IdleTime: root not found, retrying...');
                     return;
                 }
+                
                 const phoneDisplay = root.querySelector('[data-phone-display]');
+                const qrImg = root.querySelector('[data-qr-image]');
+                const messageTexts = root.querySelectorAll('.message-text');
+                
+                // Verify essential elements exist
+                if (!phoneDisplay || !qrImg || messageTexts.length === 0) {
+                    console.warn('IdleTime: essential elements not found, retrying...');
+                    return;
+                }
+                
+                console.log('IdleTime: initializing...');
+                
                 if (phoneDisplay) {
                     phoneDisplay.textContent = formatPhone(phoneNumber);
                 }
                 updateQR();
                 startMessages();
                 applySeasonalEffects();
+                
+                console.log('IdleTime: initialized successfully');
             }
 
-            // Execute init when DOM is ready or immediately if inserted dynamically
+            // Robust initialization with retry mechanism
+            let initAttempts = 0;
+            const maxAttempts = 20;
+            
+            function tryInit() {
+                const root = document.querySelector('[data-idletime-root]');
+                if (root && root.querySelector('[data-phone-display]') && root.querySelector('[data-qr-image]')) {
+                    init();
+                } else if (initAttempts < maxAttempts) {
+                    initAttempts++;
+                    setTimeout(tryInit, 100);
+                } else {
+                    console.error('IdleTime: failed to initialize after maximum attempts');
+                }
+            }
+            
+            // Start initialization
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
+                document.addEventListener('DOMContentLoaded', tryInit);
             } else {
-                // If inserted dynamically, wait a tick to ensure DOM is ready
-                setTimeout(init, 100);
+                tryInit();
             }
         })();
         </script>
