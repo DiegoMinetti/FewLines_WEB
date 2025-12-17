@@ -721,7 +721,11 @@
 
             function init() {
                 const root = document.querySelector('[data-idletime-root]');
-                if (!root) return;
+                if (!root) {
+                    // If not found, retry after a short delay
+                    setTimeout(init, 100);
+                    return;
+                }
                 const phoneDisplay = root.querySelector('[data-phone-display]');
                 if (phoneDisplay) {
                     phoneDisplay.textContent = formatPhone(phoneNumber);
@@ -736,7 +740,7 @@
                 document.addEventListener('DOMContentLoaded', init);
             } else {
                 // If inserted dynamically, wait a tick to ensure DOM is ready
-                setTimeout(init, 50);
+                setTimeout(init, 100);
             }
         })();
         </script>
