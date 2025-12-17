@@ -583,8 +583,10 @@
 
             function updateQR() {
                 const root = document.querySelector('[data-idletime-root]');
+                if (!root) return;
                 const qrImg = root.querySelector('[data-qr-image]');
                 const qrLink = root.querySelector('[data-qr-link]');
+                if (!qrImg || !qrLink) return;
                 const qrData = encodeURIComponent(whatsappUrl);
                 const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${qrData}`;
                 qrImg.src = qrSrc;
@@ -594,7 +596,9 @@
 
             function startMessages() {
                 const root = document.querySelector('[data-idletime-root]');
+                if (!root) return;
                 const nodes = Array.from(root.querySelectorAll('.message-text'));
+                if (nodes.length === 0) return;
                 let slot = 0;
                 let msgIndex = 0;
 
@@ -632,6 +636,7 @@
 
             function createSpark(mode, initialDelay = 0) {
                 const root = document.querySelector('[data-idletime-root]');
+                if (!root) return;
                 const effects = root.querySelector('.seasonal-effects');
                 if (!effects) return;
 
@@ -691,8 +696,10 @@
                 const month = today.getMonth(); // 0-based
                 const day = today.getDate();
                 const root = document.querySelector('[data-idletime-root]');
+                if (!root) return;
                 const banner = root.querySelector('[data-seasonal-banner]');
                 const bannerText = root.querySelector('[data-seasonal-text]');
+                if (!banner || !bannerText) return;
 
                 let mode = '';
                 if (month === 11 && day >= 8 && day <= 25) {
@@ -714,18 +721,22 @@
 
             function init() {
                 const root = document.querySelector('[data-idletime-root]');
+                if (!root) return;
                 const phoneDisplay = root.querySelector('[data-phone-display]');
-                phoneDisplay.textContent = formatPhone(phoneNumber);
+                if (phoneDisplay) {
+                    phoneDisplay.textContent = formatPhone(phoneNumber);
+                }
                 updateQR();
                 startMessages();
                 applySeasonalEffects();
             }
 
-            // Execute init when DOM is ready
+            // Execute init when DOM is ready or immediately if inserted dynamically
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', init);
             } else {
-                init();
+                // If inserted dynamically, wait a tick to ensure DOM is ready
+                setTimeout(init, 50);
             }
         })();
         </script>
