@@ -463,8 +463,8 @@
         </div>
         
         <!-- Auto-init hack: img onerror executes even when inserted via DOMParser -->
-        <img src="data:," style="display:none" onerror="(function(){
-            const root = this.closest('[data-idletime-root]');
+        <img src="data:image/gif;base64,INVALID" style="display:none" onerror="(function(evt){
+            const root = evt.target.closest('[data-idletime-root]');
             if (!root || root.dataset.idletimeInitialized) return;
             root.dataset.idletimeInitialized = 'true';
             
@@ -572,7 +572,7 @@
                     banner.classList.add('is-visible');
                 }
             }
-        })()">
+        })(event)">
     </div>
         
     <!-- Compiled and minified JavaScript -->
