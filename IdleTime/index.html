@@ -7,8 +7,6 @@
     <body>
         <div data-idletime-root>
             <style>
-            @import url('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css');
-            @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
             
             [data-idletime-root] {
                 all: initial;
@@ -23,30 +21,41 @@
                 font-family: inherit;
             }
 
-            [data-idletime-root] .material-icons {
-                font-family: 'Material Icons';
-                font-weight: normal;
+            [data-idletime-root] .flit-icon {
                 font-style: normal;
                 font-size: 24px;
                 line-height: 1;
-                letter-spacing: normal;
-                text-transform: none;
                 display: inline-block;
-                white-space: nowrap;
-                word-wrap: normal;
-                direction: ltr;
-                -webkit-font-feature-settings: 'liga';
-                -webkit-font-smoothing: antialiased;
+                text-align: center;
             }
 
-            [data-idletime-root] .container {
-                background: #f5f6f8;
-                overflow: hidden;
+            [data-idletime-root] .flit-center {
+                text-align: center;
+            }
+
+            [data-idletime-root] .flit-accent {
+                color: #ff6f00;
+            }
+
+            [data-idletime-root] .flit-row {
+                display: flex;
+                justify-content: center;
                 margin: 0;
-                padding: 6px 0;
+                width: 100%;
+            }
+
+            [data-idletime-root] .flit-col {
+                width: 100%;
+                max-width: 600px;
+            }
+
+            @media (min-width: 992px) {
+                [data-idletime-root] .flit-col {
+                    max-width: 66.6667%;
+                }
             }
             
-            [data-idletime-root] .screensaver-container {
+            [data-idletime-root] .flit-screensaver {
                 animation: fadeIn 0.8s ease-in;
                 display: flex;
                 justify-content: center;
@@ -60,7 +69,7 @@
                 to { opacity:  1; transform: scale(1); }
             }
             
-            [data-idletime-root] .card {
+            [data-idletime-root] .flit-card {
                 border-radius: 16px !important;
                 box-shadow: 0 16px 48px rgba(0,0,0,0.18) !important;
                 margin: 0 !important;
@@ -72,15 +81,12 @@
                 background: white;
             }
 
-            [data-idletime-root] .row {
-                margin: 0;
-            }
             
-            [data-idletime-root] .card-image {
+            [data-idletime-root] .flit-card-image {
                 padding-top: 12px;
             }
             
-            [data-idletime-root] .card-image img {
+            [data-idletime-root] .flit-card-image img {
                 border-radius: 14px;
                 max-height: 110px !important;
                 object-fit: contain !important;
@@ -90,17 +96,17 @@
                 image-rendering: -webkit-optimize-contrast;
             }
             
-            [data-idletime-root] .card-content {
+            [data-idletime-root] .flit-card-content {
                 padding: 10px !important;
             }
             
-            [data-idletime-root] .value-prop {
+            [data-idletime-root] .flit-value-prop {
                 font-size: 1.05rem !important;
                 line-height: 1.35 !important;
                 margin: 0.35rem 0 !important;
             }
 
-            [data-idletime-root] .seasonal-banner {
+            [data-idletime-root] .flit-seasonal-banner {
                 display: none;
                 align-items: center;
                 justify-content: center;
@@ -118,22 +124,22 @@
                 height: 40px;
                 border-radius: 0px;
             }
-            [data-idletime-root] .seasonal-banner [data-seasonal-text] {
+            [data-idletime-root] .flit-seasonal-banner [data-seasonal-text] {
                 position: relative;
                 z-index: 2;
             }
-            [data-idletime-root] .seasonal-banner.is-visible {
+            [data-idletime-root] .flit-seasonal-banner.flit-is-visible {
                 display: flex;
             }
 
-            [data-idletime-root] [data-idletime-root] .seasonal-banner .seasonal-effects {
+            [data-idletime-root] .flit-seasonal-banner .flit-seasonal-effects {
                 position: absolute;
                 inset: 0;
                 pointer-events: none;
                 z-index: 1;
             }
 
-            [data-idletime-root] .seasonal-banner .spark {
+            [data-idletime-root] .flit-seasonal-banner .flit-spark {
                 position: absolute;
                 width: 10px;
                 height: 10px;
@@ -142,7 +148,7 @@
                 transform: translate(-50%, -50%);
             }
 
-            [data-idletime-root] .spark-star {
+            [data-idletime-root] .flit-spark-star {
                 background: #fff6d5;
                 clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
                 box-shadow: 0 0 8px rgba(255, 246, 213, 0.8);
@@ -151,7 +157,7 @@
                 transform: translate(-50%, -50%) scale(var(--scale, 1));
             }
 
-            [data-idletime-root] .spark-firework {
+            [data-idletime-root] .flit-spark-firework {
                 width: var(--sz, 9px);
                 height: var(--sz, 9px);
                 border-radius: 50%;
@@ -170,20 +176,20 @@
                 transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(0.65);
             }
 
-            [data-idletime-root].is-christmas .seasonal-banner {
+            [data-idletime-root].flit-is-christmas .flit-seasonal-banner {
                 background: linear-gradient(120deg, #1e7f55, #3f5595);
                 box-shadow: 0 6px 18px rgba(31, 127, 85, 0.25);
             }
 
-            [data-idletime-root].is-fireworks .seasonal-banner {
+            [data-idletime-root].flit-is-fireworks .flit-seasonal-banner {
                 background: linear-gradient(120deg, #3f5595, #ff6f00);
                 box-shadow: 0 6px 18px rgba(255, 111, 0, 0.25);
             }
 
-            [data-idletime-root].is-christmas .spark-star { animation-play-state: running; }
-            [data-idletime-root].is-fireworks .spark-firework { animation-play-state: running; }
+            [data-idletime-root].flit-is-christmas .flit-spark-star { animation-play-state: running; }
+            [data-idletime-root].flit-is-fireworks .flit-spark-firework { animation-play-state: running; }
             
-            [data-idletime-root] .rotating-message {
+            [data-idletime-root] .flit-rotating-message {
                 height: 52px;
                 margin: 0.6rem 0;
                 position: relative;
@@ -192,7 +198,7 @@
                 justify-content: center;
             }
             
-            [data-idletime-root] .rotating-message .message-text {
+            [data-idletime-root] .flit-rotating-message .flit-message-text {
                 font-size: 1rem;
                 font-weight: 500;
                 color: #4a4a4a;
@@ -211,18 +217,18 @@
                 padding: 0 8px;
             }
             
-            [data-idletime-root] .rotating-message .message-text.is-active {
+            [data-idletime-root] .flit-rotating-message .flit-message-text.flit-is-active {
                 opacity: 1;
                 transform: translate(-50%, 0);
                 left: 50%;
             }
 
-            [data-idletime-root] .rotating-message .message-text.is-leaving {
+            [data-idletime-root] .flit-rotating-message .flit-message-text.flit-is-leaving {
                 opacity: 0;
                 transform: translate(-50%, -22px);
             }
             
-            [data-idletime-root] .qr-section {
+            [data-idletime-root] .flit-qr-section {
                 border-radius: 12px;
                 padding: 0.4rem 0.35rem;
                 margin: 0.5rem 0;
@@ -234,7 +240,7 @@
                 gap: 10px;
             }
 
-            [data-idletime-root] .qr-text {
+            [data-idletime-root] .flit-qr-text {
                 color: #333;
                 font-weight: 600;
                 font-size: 0.98rem;
@@ -247,11 +253,11 @@
                 min-width: 0;
             }
 
-            [data-idletime-root] .qr-title {
+            [data-idletime-root] .flit-qr-title {
                 justify-content: flex-start;
             }
 
-            [data-idletime-root] .qr-scan {
+            [data-idletime-root] .flit-qr-scan {
                 display: inline-flex;
                 flex-direction: column;
                 align-items: center;
@@ -262,7 +268,7 @@
                 text-align: center;
             }
             
-            [data-idletime-root] .qr-wrapper {
+            [data-idletime-root] .flit-qr-wrapper {
                 position: relative;
                 display: inline-block;
                 padding: 0;
@@ -273,7 +279,7 @@
                 flex-shrink: 0;
             }
 
-            [data-idletime-root] .qr-wrapper::after {
+            [data-idletime-root] .flit-qr-wrapper::after {
                 content: '';
                 position: absolute;
                 inset: -4px;
@@ -290,7 +296,7 @@
                 100% { box-shadow: 0 0 0 0 rgba(63,85,149,0); opacity: 0; }
             }
             
-            [data-idletime-root] .qr-image {
+            [data-idletime-root] .flit-qr-image {
                 position: relative;
                 border-radius: 10px;
                 display: block;
@@ -308,12 +314,12 @@
                 overflow: hidden;
             }
 
-            [data-idletime-root].is-christmas .seasonal-overlay,
-            [data-idletime-root].is-fireworks .seasonal-overlay {
+            [data-idletime-root].flit-is-christmas .seasonal-overlay,
+            [data-idletime-root].flit-is-fireworks .seasonal-overlay {
                 display: block;
             }
 
-            [data-idletime-root] .spark {
+            [data-idletime-root] .flit-spark {
                 position: absolute;
                 width: 8px;
                 height: 8px;
@@ -341,7 +347,7 @@
                 100% { transform: translate(-50%, calc(-50% + 8px)) rotate(var(--rot, 0deg)) scale(1.4); opacity: 0; }
             }
             
-            [data-idletime-root] .scan-indicator {
+            [data-idletime-root] .flit-scan-indicator {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -351,7 +357,7 @@
                 font-weight: 600;
             }
             
-            [data-idletime-root] .benefits-grid {
+            [data-idletime-root] .flit-benefits-grid {
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
@@ -360,32 +366,32 @@
                 padding: 0.35rem;
             }
             
-            [data-idletime-root] .benefit-item {
+            [data-idletime-root] .flit-benefit-item {
                 text-align: center;
                 flex: 1;
             }
             
-            [data-idletime-root] .benefit-item i {
+            [data-idletime-root] .flit-benefit-item i {
                 font-size:  2rem;
                 color: #FF6F00;
                 margin-bottom: 0.3rem;
                 display: block;
             }
             
-            [data-idletime-root] .benefit-item p {
+            [data-idletime-root] .flit-benefit-item p {
                 margin: 0;
                 font-size: 0.83rem;
                 font-weight: 600;
                 color: #666;
             }
             
-            [data-idletime-root] .footer-info {
+            [data-idletime-root] .flit-footer-info {
                 margin-top: 0.8rem ! important;
                 padding-top:  0.8rem !important;
                 border-top: 1px solid #eee;
             }
             
-            [data-idletime-root] .footer-info p {
+            [data-idletime-root] .flit-footer-info p {
                 color: #666;
                 font-size: 0.9rem;
                 margin: 0;
@@ -394,64 +400,68 @@
                 gap: 6px;
                 letter-spacing: 0.3px;
             }
+
+            [data-idletime-root] .flit-tiny {
+                font-size: 1rem;
+            }
         </style>
 
-    <div class="screensaver-container">
-            <div class="row">
-                <div class="col s12 m10 offset-m1 l8 offset-l2">
+    <div class="flit-screensaver">
+            <div class="flit-row">
+                <div class="flit-col">
                     
-                                        <div class="card">
-                                                                <div class="seasonal-banner" data-seasonal-banner>
+                                        <div class="flit-card">
+                                                                <div class="flit-seasonal-banner" data-flit-seasonal-banner>
                                                 <span data-seasonal-text></span>
-                                                <span class="seasonal-effects" aria-hidden="true"></span>
+                                                <span class="flit-seasonal-effects" aria-hidden="true"></span>
                                             </div>
 
-                                            <div class="card-image">
+                                            <div class="flit-card-image">
                                             <img src="https://www.fewlines.com.ar/images/Logo_AzulGrisOscuro.png" width="761" height="191" loading="lazy" decoding="async" alt="Few Lines logo">
                     </div>
-                    <div class="card-content">
+                    <div class="flit-card-content">
                       <!-- Propuesta de Valor -->
-                      <p class="value-prop center-align">
-                          <span class="orange-text" style="font-weight: 600;">Soluciones simples</span> para problemas complejos
+                      <p class="flit-value-prop flit-center">
+                          <span class="flit-accent" style="font-weight: 600;">Soluciones simples</span> para problemas complejos
                       </p>
                       <!-- Mensajes Rotativos -->
-                      <div class="rotating-message center-align">
-                                                    <p class="message-text is-active"></p>
-                                                    <p class="message-text"></p>
+                      <div class="flit-rotating-message flit-center">
+                                                    <p class="flit-message-text flit-is-active"></p>
+                                                    <p class="flit-message-text"></p>
                       </div>
                       
                       <!-- Beneficios Grid (Horizontal) -->
-                      <div class="benefits-grid">
-                          <div class="benefit-item">
-                              <i class="material-icons">speed</i>
+                      <div class="flit-benefits-grid">
+                          <div class="flit-benefit-item">
+                              <i class="flit-icon" aria-hidden="true">⚡</i>
                               <p>Rápido</p>
                           </div>
-                          <div class="benefit-item">
-                              <i class="material-icons">verified</i>
+                          <div class="flit-benefit-item">
+                              <i class="flit-icon" aria-hidden="true">✓</i>
                               <p>Confiable</p>
                           </div>
-                          <div class="benefit-item">
-                              <i class="material-icons">trending_up</i>
+                          <div class="flit-benefit-item">
+                              <i class="flit-icon" aria-hidden="true">↗</i>
                               <p>Escalable</p>
                           </div>
                       </div>
                       
                       <!-- Sección QR (ahora es el CTA principal) -->
-                      <div class="qr-section">
-                          <p class="qr-text qr-title">¿Hablamos de tu proyecto?</p>
-                          <a class="qr-wrapper" data-qr-link target="_blank" rel="noopener">
-                              <img class="qr-image" data-qr-image src="" alt="QR hacia WhatsApp" loading="lazy" decoding="async">
+                      <div class="flit-qr-section">
+                          <p class="flit-qr-text flit-qr-title">¿Hablamos de tu proyecto?</p>
+                          <a class="flit-qr-wrapper" data-qr-link target="_blank" rel="noopener">
+                              <img class="flit-qr-image" data-flit-qr-image src="" alt="QR hacia WhatsApp" loading="lazy" decoding="async">
                           </a>
-                          <p class="qr-text qr-scan">
-                              <i class="material-icons" aria-hidden="true">photo_camera</i>
+                          <p class="flit-qr-text flit-qr-scan">
+                              <i class="flit-icon" aria-hidden="true">📷</i>
                               Apunta tu cámara aquí
                           </p>
                       </div>
                       
                       <!-- Footer Info -->
-                      <div class="center-align footer-info">
+                      <div class="flit-center flit-footer-info">
                           <p>
-                              <i class="material-icons tiny" style="vertical-align: middle;">phone</i>
+                              <i class="flit-icon flit-tiny" style="vertical-align: middle;" aria-hidden="true">☎</i>
                               <span data-phone-display></span>
                           </p>
                       </div>
@@ -484,7 +494,7 @@
             }
             
             // Update QR
-            const qrImg = root.querySelector('[data-qr-image]');
+            const qrImg = root.querySelector('[data-flit-qr-image]');
             const qrLink = root.querySelector('[data-qr-link]');
             if (qrImg && qrLink) {
                 const qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(whatsappUrl);
@@ -494,7 +504,7 @@
             }
             
             // Start messages
-            const nodes = Array.from(root.querySelectorAll('.message-text'));
+            const nodes = Array.from(root.querySelectorAll('.flit-message-text'));
             if (nodes.length > 0) {
                 let slot = 0, msgIndex = 0;
                 nodes[slot].textContent = messages[msgIndex];
@@ -506,11 +516,11 @@
                     const next = nodes[nextSlot];
                     next.textContent = messages[msgIndex];
                     msgIndex = (msgIndex + 1) % messages.length;
-                    current.classList.remove('is-active');
-                    current.classList.add('is-leaving');
-                    next.classList.remove('is-leaving');
-                    requestAnimationFrame(function() { next.classList.add('is-active'); });
-                    setTimeout(function() { current.classList.remove('is-leaving'); }, 420);
+                    current.classList.remove('flit-is-active');
+                    current.classList.add('flit-is-leaving');
+                    next.classList.remove('flit-is-leaving');
+                    requestAnimationFrame(function() { next.classList.add('flit-is-active'); });
+                    setTimeout(function() { current.classList.remove('flit-is-leaving'); }, 420);
                     slot = nextSlot;
                 }, 2800);
             }
@@ -519,21 +529,21 @@
             const today = new Date();
             const month = today.getMonth();
             const day = today.getDate();
-            const banner = root.querySelector('[data-seasonal-banner]');
+            const banner = root.querySelector('[data-flit-seasonal-banner]');
             const bannerText = root.querySelector('[data-seasonal-text]');
             
             if (banner && bannerText) {
                 let mode = '';
                 if (month === 11 && day >= 8 && day <= 25) {
-                    mode = 'is-christmas';
+                    mode = 'flit-is-christmas';
                     bannerText.textContent = '🎄 ¡Feliz Navidad!';
                 } else if ((month === 11 && day >= 26) || (month === 0 && day <= 1)) {
-                    mode = 'is-fireworks';
+                    mode = 'flit-is-fireworks';
                     bannerText.textContent = '🎆 ¡Felices fiestas!';
                 }
                 
                 if (mode) {
-                    const effects = root.querySelector('.seasonal-effects');
+                    const effects = root.querySelector('.flit-seasonal-effects');
                     function createSpark() {
                         if (!effects) return;
                         const roll = Math.random();
@@ -543,15 +553,15 @@
                         s.style.left = x + '%';
                         s.style.top = y + '%';
                         
-                        if (mode === 'is-christmas') {
-                            s.className = 'spark spark-star';
+                        if (mode === 'flit-is-christmas') {
+                            s.className = 'flit-spark flit-spark-star';
                             s.style.setProperty('--scale', (0.65 + Math.random() * 0.75).toFixed(2));
                             const dur = 2.2 + Math.random() * 1.6;
                             s.style.setProperty('--dur', dur.toFixed(2) + 's');
                             s.style.setProperty('--delay', '0s');
                             s.addEventListener('animationend', function() { s.remove(); createSpark(); }, {once: true});
                         } else {
-                            s.className = 'spark spark-firework';
+                            s.className = 'flit-spark flit-spark-firework';
                             s.style.setProperty('--sz', (7 + Math.random() * 7).toFixed(1) + 'px');
                             s.style.setProperty('--hue', (30 + Math.random() * 50).toFixed(0));
                             s.style.setProperty('--rot', Math.floor(Math.random() * 360) + 'deg');
@@ -563,19 +573,17 @@
                         effects.appendChild(s);
                     }
                     
-                    const count = mode === 'is-christmas' ? 5 + Math.floor(Math.random() * 5) : 5 + Math.floor(Math.random() * 4);
+                    const count = mode === 'flit-is-christmas' ? 5 + Math.floor(Math.random() * 5) : 5 + Math.floor(Math.random() * 4);
                     for (let i = 0; i < count; i++) {
                         setTimeout(createSpark, (i / count) * 2400);
                     }
                     
                     root.classList.add(mode);
-                    banner.classList.add('is-visible');
+                    banner.classList.add('flit-is-visible');
                 }
             }
         })(event)">
     </div>
         
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
 </html>
