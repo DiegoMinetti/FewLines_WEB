@@ -22,47 +22,38 @@
     }
 })();
 
-// Check if buttons/links are available (with error handling)
+// Scroll-reveal: fade/slide elements into view as they enter the viewport
 (function() {
-    var buttons = document.querySelectorAll('.wsup-button, .btn-tool');
-    
-    for (var i = 0; i < buttons.length; i++) {
-        (function(button, http) {
-            if (!button.href) return;
-            
-            // Set timeout for request
-            http.timeout = 5000; // 5 seconds
-            
-            http.open('HEAD', button.href);
-            
-            http.onreadystatechange = function() {
-                if (this.readyState === this.DONE) {
-                    if (this.status === 200) {
-                        button.style.display = 'inline-flex';
-                    } else if (this.status !== 0) {
-                        // Hide button only if we got a definitive error response
-                        button.style.display = 'none';
-                    }
-                    // If status is 0 (CORS/network error), leave button visible
-                }
-            };
-            
-            http.onerror = function() {
-                // On network error, leave button visible (better UX)
-                button.style.display = 'inline-flex';
-            };
-            
-            http.ontimeout = function() {
-                // On timeout, leave button visible (better UX)
-                button.style.display = 'inline-flex';
-            };
-            
-            try {
-                http.send();
-            } catch (e) {
-                // On exception, leave button visible
-                button.style.display = 'inline-flex';
-            }
-        }(buttons[i], new XMLHttpRequest()));
+    var revealEls = document.querySelectorAll('.reveal');
+    if (!revealEls.length) return;
+
+    // index siblings within each grid so CSS can stagger them
+    ['.services-grid', '.features-grid'].forEach(function(sel) {
+        var grid = document.querySelector(sel);
+        if (!grid) return;
+        var items = grid.querySelectorAll('.reveal');
+        for (var i = 0; i < items.length; i++) {
+            items[i].style.setProperty('--i', i);
+        }
+    });
+
+    // No IntersectionObserver (or reduced motion) -> show everything immediately
+    var reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!('IntersectionObserver' in window) || reduceMotion) {
+        revealEls.forEach(function(el) { el.classList.add('is-visible'); });
+        return;
     }
+
+    var observer = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+
+    revealEls.forEach(function(el) { observer.observe(el); });
 })();
